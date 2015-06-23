@@ -34,6 +34,17 @@ public class TennisGame1 implements TennisGame {
         rules.add(new Rule() {
 
             public boolean match(Score score1, Score score2) {
+                return player1Score.lessOrEqualThan(Score.FORTY) && player2Score.lessOrEqualThan(Score.FORTY) && !player1Score.even(player2Score);
+            }
+
+            public String getScore(Score score1, Score score2) {
+                return player1Score.toString() + "-" + player2Score.toString();
+            }
+        });
+
+        rules.add(new Rule() {
+
+            public boolean match(Score score1, Score score2) {
                 return player1Score.even(player2Score) && player1Score.greaterOrEqual(Score.FORTY);
             }
 
@@ -63,17 +74,6 @@ public class TennisGame1 implements TennisGame {
 
             public String getScore(Score score1, Score score2) {
                 return "Win for " + player1Score.max(player2Score).getPlayerName();
-            }
-        });
-
-        rules.add(new Rule() {
-
-            public boolean match(Score score1, Score score2) {
-                return player1Score.lessOrEqualThan(Score.FORTY) && player2Score.lessOrEqualThan(Score.FORTY) && !player1Score.even(player2Score);
-            }
-
-            public String getScore(Score score1, Score score2) {
-                return player1Score.toString() + "-" + player2Score.toString();
             }
         });
     }
