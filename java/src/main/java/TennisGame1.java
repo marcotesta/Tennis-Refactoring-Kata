@@ -69,7 +69,7 @@ public class TennisGame1 implements TennisGame {
         rules.add(new Rule() {
 
             public boolean match(Score score1, Score score2) {
-                return true;
+                return player1Score.lessOrEqualThan(Score.FORTY) && player2Score.lessOrEqualThan(Score.FORTY) && !player1Score.even(player2Score);
             }
 
             public String getScore(Score score1, Score score2) {

@@ -40,6 +40,10 @@ public class Score {
         return !this.greaterOrEqual(that);
     }
 
+    public boolean lessOrEqualThan(Score that) {
+        return !this.greaterThan(that);
+    }
+
     public int getValue() {
         return value;
     }
@@ -77,5 +81,7 @@ public class Score {
                 return "";
         }
     }
+
+
 
 }
