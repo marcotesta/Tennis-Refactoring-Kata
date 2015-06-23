@@ -28,16 +28,16 @@ public class Score {
         return this.value == that.value;
     }
 
-    public boolean greaterOrEqual(Score that) {
-        return this.value >= that.value;
-    }
-
     public boolean greaterThan(Score that) {
         return this.value > that.value;
     }
 
+    public boolean greaterOrEqual(Score that) {
+        return this.greaterThan(that) || this.even(that);
+    }
+
     public boolean lessThan(Score that) {
-        return this.value < that.value;
+        return !this.greaterOrEqual(that);
     }
 
     public int getValue() {
