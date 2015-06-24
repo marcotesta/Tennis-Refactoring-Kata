@@ -4,92 +4,78 @@ import java.util.List;
 
 public class TennisGame1 implements TennisGame {
 
-    private Count player1Score;
-    private Count player2Score;
+    private Count count1;
+    private Count count2;
 
     private final List<Rule> rules = new ArrayList<Rule>();
 
 
     public TennisGame1(String player1Name, String player2Name) {
-        this.player1Score = new Count(player1Name);
-        this.player2Score = new Count(player2Name);
+        this.count1 = new Count(player1Name);
+        this.count2 = new Count(player2Name);
 
         init();
     }
 
     private void init() {
 
-        rules.add(new Rule() {
+        rules.add(new Rule(new And(new Even(), new FirstCountLessThanForty())) {
 
-            public boolean match(Count score1, Count score2) {
-                return player1Score.even(player2Score) && player1Score.lessThan(Count.FORTY);
-            }
-
-            public String getScore(Count score1, Count score2) {
-                return player1Score.toString() + "-All";
+            @Override
+            public String getScore(Count count1, Count count2) {
+                return count1.toString() + "-All";
             }
 
         });
 
-        rules.add(new Rule() {
 
-            public boolean match(Count score1, Count score2) {
-                return player1Score.lessOrEqualThan(Count.FORTY) && player2Score.lessOrEqualThan(Count.FORTY) && !player1Score.even(player2Score);
-            }
+        rules.add(new Rule(new And(new And(new FirstCountLessOrEqualThanForty(), new SecondCountLessOrEqualThanForty()), new Not(new Even()))) {
 
-            public String getScore(Count score1, Count score2) {
-                return player1Score.toString() + "-" + player2Score.toString();
+            @Override
+            public String getScore(Count count1, Count count2) {
+                return count1.toString() + "-" + count2.toString();
             }
         });
 
-        rules.add(new Rule() {
+        rules.add(new Rule(new And(new Even(), new FirstCountGreaterOrEqualForty())) {
 
-            public boolean match(Count score1, Count score2) {
-                return player1Score.even(player2Score) && player1Score.greaterOrEqual(Count.FORTY);
-            }
-
-            public String getScore(Count score1, Count score2) {
+            @Override
+            public String getScore(Count count1, Count count2) {
                 return "Deuce";
             }
 
         });
 
-        rules.add(new Rule() {
+        rules.add(new Rule(new And(new Or(new FirstCountGreaterThanForty(), new SecondCountGreaterThanForty()), new DifferByOne())) {
 
-            public boolean match(Count score1, Count score2) {
-                return (player1Score.greaterThan(Count.FORTY) || player2Score.greaterThan(Count.FORTY)) && player1Score.difference(player2Score) == 1;
-            }
-
-            public String getScore(Count score1, Count score2) {
-                return "Advantage " + player1Score.max(player2Score).getPlayerName();
+            @Override
+            public String getScore(Count count1, Count count2) {
+                return "Advantage " + count1.max(count2).getPlayerName();
             }
 
         });
 
-        rules.add(new Rule() {
+        rules.add(new Rule(new And(new Or(new FirstCountGreaterThanForty(), new SecondCountGreaterThanForty()), new DifferMoreThanOne())) {
 
-            public boolean match(Count score1, Count score2) {
-                return (player1Score.greaterThan(Count.FORTY) || player2Score.greaterThan(Count.FORTY)) && player1Score.difference(player2Score) >= 2;
-            }
-
-            public String getScore(Count score1, Count score2) {
-                return "Win for " + player1Score.max(player2Score).getPlayerName();
+            @Override
+            public String getScore(Count count1, Count count2) {
+                return "Win for " + count1.max(count2).getPlayerName();
             }
         });
     }
 
     public void wonPoint(String playerName) {
-        if (player1Score.belongTo(playerName))
-            player1Score.increment();
+        if (count1.belongTo(playerName))
+            count1.increment();
         else
-            player2Score.increment();
+            count2.increment();
     }
 
     public String getScore() {
 
         for (Rule rule : rules) {
-            if (rule.match(player1Score, player2Score)) {
-                return rule.getScore(player1Score, player2Score);
+            if (rule.match(count1, count2)) {
+                return rule.getScore(count1, count2);
             }
         }
 
