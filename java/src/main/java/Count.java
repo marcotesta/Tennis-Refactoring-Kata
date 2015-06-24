@@ -6,6 +6,13 @@ public class Count {
     private int value;
     private String playerName;
 
+    private Converter converter = new Converter(){
+
+        public String convert(int value) {
+            return "";
+        }
+    };
+
     public Count(String aPlayerName) {
         this.value = 0;
         this.playerName = aPlayerName;
@@ -65,23 +72,12 @@ public class Count {
         }
     }
 
-    @Override
-    public String toString() {
-        switch(value)
-        {
-            case 0:
-                 return "Love";
-            case 1:
-                 return "Fifteen";
-            case 2:
-                return "Thirty";
-            case 3:
-                return "Forty";
-            default:
-                return "";
-        }
+    public String asString() {
+        return converter.convert(value);
     }
 
-
+    public void setConverter(Converter converter) {
+        this.converter = converter;
+    }
 
 }

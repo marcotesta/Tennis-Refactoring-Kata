@@ -13,11 +13,31 @@ public class TennisGame1 implements TennisGame {
     private Score createScore(String player1Name, String player2Name) {
 
         Score score = new Score(player1Name, player2Name);
+
+        score.setConverter(new Converter() {
+
+            public String convert(int value) {
+                switch(value)
+                {
+                    case 0:
+                        return "Love";
+                    case 1:
+                        return "Fifteen";
+                    case 2:
+                        return "Thirty";
+                    case 3:
+                        return "Forty";
+                    default:
+                        return "";
+                }
+            }
+        });
+
         score.addRule(new Rule(new And(new Even(), new FirstCountLessThanForty())) {
 
             @Override
             public String getScore(Count count1, Count count2) {
-                return count1.toString() + "-All";
+                return count1.asString() + "-All";
             }
         });
 
@@ -25,7 +45,7 @@ public class TennisGame1 implements TennisGame {
 
             @Override
             public String getScore(Count count1, Count count2) {
-                return count1.toString() + "-" + count2.toString();
+                return count1.asString() + "-" + count2.asString();
             }
         });
 

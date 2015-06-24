@@ -35,4 +35,10 @@ public class Score {
 
         return "";
     }
+
+    public void setConverter(Converter converter) {
+        count1.setConverter(converter);
+        count2.setConverter(converter);
+    }
+
 }
