@@ -1,17 +1,17 @@
 
-public class Score {
+public class Count {
 
-    public static final Score FORTY = new Score(3);
+    public static final Count FORTY = new Count(3);
 
     private int value;
     private String playerName;
 
-    public Score(String aPlayerName) {
+    public Count(String aPlayerName) {
         this.value = 0;
         this.playerName = aPlayerName;
     }
 
-    private Score(int aValue) {
+    private Count(int aValue) {
         this.value = aValue;
         this.playerName = "";
     }
@@ -24,23 +24,23 @@ public class Score {
         value++;
     }
 
-    public boolean even(Score that) {
+    public boolean even(Count that) {
         return this.value == that.value;
     }
 
-    public boolean greaterThan(Score that) {
+    public boolean greaterThan(Count that) {
         return this.value > that.value;
     }
 
-    public boolean greaterOrEqual(Score that) {
+    public boolean greaterOrEqual(Count that) {
         return this.greaterThan(that) || this.even(that);
     }
 
-    public boolean lessThan(Score that) {
+    public boolean lessThan(Count that) {
         return !this.greaterOrEqual(that);
     }
 
-    public boolean lessOrEqualThan(Score that) {
+    public boolean lessOrEqualThan(Count that) {
         return !this.greaterThan(that);
     }
 
@@ -52,12 +52,12 @@ public class Score {
         return playerName;
     }
 
-    public int difference(Score that) {
+    public int difference(Count that) {
         return Math.abs(this.value - that.value);
     }
 
 
-    public Score max(Score that) {
+    public Count max(Count that) {
         if (this.value >= that.value) {
             return this;
         } else {

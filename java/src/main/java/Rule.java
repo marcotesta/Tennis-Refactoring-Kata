@@ -1,7 +1,7 @@
 
 public interface Rule {
 
-    public boolean match(Score score1, Score score2);
+    public boolean match(Count score1, Count score2);
 
-    public String getScore(Score score1, Score score2);
+    public String getScore(Count score1, Count score2);
 }
